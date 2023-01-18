@@ -41,6 +41,7 @@ export const Product = styled(Link, {
 
     transform: "translateY(110%)",
     opacity: 0,
+
     transition: "all 0.2s ease-in-out",
 
     div: {
@@ -67,9 +68,9 @@ export const Product = styled(Link, {
       backgroundColor: "$green500",
       color: "$white",
 
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      display:"flex",
+      alignItems:"center",
+      justifyContent:"center",
       cursor: "pointer",
     },
   },
