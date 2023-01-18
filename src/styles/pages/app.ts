@@ -13,4 +13,31 @@ export const Header = styled("header", {
   width: "100%",
   maxWidth: "1180px",
   margin: "0 auto",
+
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+
+  ".icon": {
+    position: "relative",
+    padding: "0.75rem 0.85rem",
+    backgroundColor: "$gray800",
+    borderRadius: 8,
+
+    cursor: "pointer",
+
+    span: {
+      position: "absolute",
+      top: -8,
+      right: -10,
+      backgroundColor: "$green500",
+      width: 25,
+      height: 25,
+      borderRadius: "50%",
+
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+  },
 });
