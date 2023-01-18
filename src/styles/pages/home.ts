@@ -43,15 +43,34 @@ export const Product = styled(Link, {
     opacity: 0,
     transition: "all 0.2s ease-in-out",
 
-    strong: {
-      fontSize: "$lg",
-      color:'$gray100'
+    div: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      strong: {
+        fontSize: "$lg",
+        color: "$gray100",
+      },
+
+      span: {
+        fontSize: "$xl",
+        fontWeight: "bold",
+        color: "$green300",
+      },
     },
 
-    span: {
-      fontSize: "$xl",
-      fontWeight: "bold",
-      color: "$green300",
+    ".icon": {
+      width: 56,
+      height: 56,
+      borderRadius: 6,
+      border: 0,
+      backgroundColor: "$green500",
+      color: "$white",
+
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
     },
   },
 

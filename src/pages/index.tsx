@@ -10,6 +10,8 @@ import { stripe } from "@/lib/stripe";
 import Stripe from "stripe";
 import Head from "next/head";
 
+import { HiOutlineShoppingBag } from "react-icons/hi";
+
 interface HomeProps {
   products: {
     id: string;
@@ -45,8 +47,14 @@ export default function Home({ products }: HomeProps) {
               <Image src={product.imageUrl} width={520} height={480} alt="" />
 
               <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
+                <div>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </div>
+
+                <div className="icon">
+                  <HiOutlineShoppingBag size={25} />
+                </div>
               </footer>
             </Product>
           );
