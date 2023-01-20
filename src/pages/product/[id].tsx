@@ -8,8 +8,9 @@ import {
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Head from "next/head";
+import { ShoppingCartContext } from "@/context/ShoppingCartContext";
 
 interface ProductProps {
   product: {
@@ -26,24 +27,35 @@ export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false);
 
+    const { addNewProduct } = useContext(ShoppingCartContext)
+
   async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true);
+    const data = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.imageUrl,
+    };
 
-      const response = await axios.post("/api/checkout", {
-        priceId: product.defaultPriceId,
-      });
+    addNewProduct(data)
 
-      const { checkoutUrl } = response.data;
+    // try {
+    //   setIsCreatingCheckoutSession(true);
 
-      window.location.href = checkoutUrl;
-    } catch (error) {
-      //conectar com uma ferramenta de observabilidade (Datadog / Sentry)
+    //   const response = await axios.post("/api/checkout", {
+    //     priceId: product.defaultPriceId,
+    //   });
 
-      isCreatingCheckoutSession(false);
+    //   const { checkoutUrl } = response.data;
 
-      alert("Falha ao redirecionar ao checkou");
-    }
+    //   window.location.href = checkoutUrl;
+    // } catch (error) {
+    //   //conectar com uma ferramenta de observabilidade (Datadog / Sentry)
+
+    //   isCreatingCheckoutSession(false);
+
+    //   alert("Falha ao redirecionar ao checkou");
+    // }
   }
 
   return (

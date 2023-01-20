@@ -7,6 +7,7 @@ import Image from "next/image";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import ShoppingCart from "@/components/ShoppingCart";
 import { useState } from "react";
+import { ShoppingCartProvider } from "@/context/ShoppingCartContext";
 
 globalStyles();
 
@@ -14,18 +15,20 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Container>
-      <Header>
-        <Image src={logoImg} alt="" />
+    <ShoppingCartProvider>
+      <Container>
+        <Header>
+          <Image src={logoImg} alt="" />
 
-        <div className="icon" onClick={() => setIsOpen(!isOpen)}>
-          <span>1</span>
-          <HiOutlineShoppingBag size={20} />
-        </div>
+          <div className="icon" onClick={() => setIsOpen(!isOpen)}>
+            <span>1</span>
+            <HiOutlineShoppingBag size={20} />
+          </div>
 
-        <ShoppingCart isOpen={isOpen} handleSetIsOpen={setIsOpen} />
-      </Header>
-      <Component {...pageProps} />
-    </Container>
+          <ShoppingCart isOpen={isOpen} handleSetIsOpen={setIsOpen} />
+        </Header>
+        <Component {...pageProps} />
+      </Container>
+    </ShoppingCartProvider>
   );
 }
