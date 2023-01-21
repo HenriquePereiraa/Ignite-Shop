@@ -5,6 +5,7 @@ interface Product {
   name: string;
   price: string;
   image: string;
+  defaultPriceId: string;
 }
 
 interface ShoppingCartContextType {

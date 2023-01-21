@@ -1,7 +1,8 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { ShoppingCartContainer, ContentMainCart } from "./styles";
 import { ShoppingCartContext } from "@/context/ShoppingCartContext";
 import Image from "next/image";
+import axios from "axios";
 
 interface ShoppingCartProps {
   isOpen: boolean;
@@ -13,6 +14,9 @@ export default function ShoppingCart({
   handleSetIsOpen,
 }: ShoppingCartProps) {
   const { productsInCart, removeProduct } = useContext(ShoppingCartContext);
+
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
 
   const totalPrice = useMemo(() => {
     let price = productsInCart.reduce((acc, product) => {
@@ -28,6 +32,32 @@ export default function ShoppingCart({
 
     return priceEdit;
   }, [productsInCart]);
+
+  async function handleBuyFinished() {
+    try {
+      setIsCreatingCheckoutSession(true);
+
+      const priceIds = productsInCart.map((prod) => {
+        return {
+          id: prod.defaultPriceId,
+        };
+      });
+
+      const response = await axios.post("/api/checkout", {
+        priceId: priceIds,
+      });
+
+      const { checkoutUrl } = response.data;
+
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      //conectar com uma ferramenta de observabilidade (Datadog / Sentry)
+
+      isCreatingCheckoutSession(false);
+
+      alert("Falha ao redirecionar ao checkou");
+    }
+  }
 
   return (
     <ShoppingCartContainer css={{ $$displayT: isOpen ? "" : "none" }}>
@@ -89,7 +119,12 @@ export default function ShoppingCart({
             <strong>{totalPrice}</strong>
           </div>
 
-          <button>Finalizar compras</button>
+          <button
+            onClick={handleBuyFinished}
+            disabled={isCreatingCheckoutSession}
+          >
+            Finalizar compras
+          </button>
         </footer>
       </ContentMainCart>
     </ShoppingCartContainer>

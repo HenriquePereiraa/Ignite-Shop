@@ -24,46 +24,28 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false);
+  const [isAddInCart, setIsAddInCart] = useState(false);
 
   const { addNewProduct } = useContext(ShoppingCartContext);
 
   async function handleBuyProduct() {
-    const price = product.price
+    const price = product.price;
 
     const data = {
       id: product.id,
       name: product.name,
       price,
       image: product.imageUrl,
+      defaultPriceId: product.defaultPriceId,
     };
 
     addNewProduct(data);
-
-    // try {
-    //   setIsCreatingCheckoutSession(true);
-
-    //   const response = await axios.post("/api/checkout", {
-    //     priceId: product.defaultPriceId,
-    //   });
-
-    //   const { checkoutUrl } = response.data;
-
-    //   window.location.href = checkoutUrl;
-    // } catch (error) {
-    //   //conectar com uma ferramenta de observabilidade (Datadog / Sentry)
-
-    //   isCreatingCheckoutSession(false);
-
-    //   alert("Falha ao redirecionar ao checkou");
-    // }
   }
 
   const price = new Intl.NumberFormat("pt-br", {
     style: "currency",
     currency: "BRL",
-  }).format(product.price / 100)
+  }).format(product.price / 100);
 
   return (
     <>
@@ -82,10 +64,7 @@ export default function Product({ product }: ProductProps) {
 
           <p>{product?.description}</p>
 
-          <button
-            onClick={handleBuyProduct}
-            disabled={isCreatingCheckoutSession}
-          >
+          <button onClick={handleBuyProduct} disabled={isAddInCart}>
             Comprar agora
           </button>
         </ProductDetails>
