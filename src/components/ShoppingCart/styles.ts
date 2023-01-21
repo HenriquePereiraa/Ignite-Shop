@@ -35,9 +35,11 @@ export const ContentMainCart = styled("main", {
   flexDirection: "column",
   width: "100%",
   padding: "0 2rem",
-  marginTop: "25px",
+  marginTop: "10px",
 
   ".products": {
+    maxHeight:"440px",
+    height:"100%",
     ".product": {
       marginTop: "30px",
       display: "flex",
@@ -78,6 +80,8 @@ export const ContentMainCart = styled("main", {
     },
   },
   footer: {
+    zIndex: "1",
+    backgroundColor: "$gray800",
     width: "87%",
     position: "absolute",
     bottom: 8,

@@ -27,17 +27,19 @@ export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false);
 
-    const { addNewProduct } = useContext(ShoppingCartContext)
+  const { addNewProduct } = useContext(ShoppingCartContext);
 
   async function handleBuyProduct() {
+    const price = product.price
+
     const data = {
       id: product.id,
       name: product.name,
-      price: product.price,
+      price,
       image: product.imageUrl,
     };
 
-    addNewProduct(data)
+    addNewProduct(data);
 
     // try {
     //   setIsCreatingCheckoutSession(true);
@@ -58,6 +60,11 @@ export default function Product({ product }: ProductProps) {
     // }
   }
 
+  const price = new Intl.NumberFormat("pt-br", {
+    style: "currency",
+    currency: "BRL",
+  }).format(product.price / 100)
+
   return (
     <>
       <Head>
@@ -71,7 +78,7 @@ export default function Product({ product }: ProductProps) {
 
         <ProductDetails>
           <h1>{product?.name}</h1>
-          <span>{product?.price}</span>
+          <span>{price}</span>
 
           <p>{product?.description}</p>
 
@@ -112,10 +119,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         name: product.name,
         description: product.description,
         imageUrl: product.images[0],
-        price: new Intl.NumberFormat("pt-br", {
-          style: "currency",
-          currency: "BRL",
-        }).format(price.unit_amount / 100),
+        price: price.unit_amount,
         defaultPriceId: price.id,
       },
     },

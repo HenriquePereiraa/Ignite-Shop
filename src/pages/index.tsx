@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import Image from "next/image";
 import { GetStaticProps } from "next";
 
@@ -11,6 +12,8 @@ import Stripe from "stripe";
 import Head from "next/head";
 
 import { HiOutlineShoppingBag } from "react-icons/hi";
+
+import { ShoppingCartContext } from "@/context/ShoppingCartContext";
 
 interface HomeProps {
   products: {
@@ -28,6 +31,8 @@ export default function Home({ products }: HomeProps) {
       spacing: 40,
     },
   });
+
+  const { productsInCart } = useContext(ShoppingCartContext);
 
   return (
     <>
